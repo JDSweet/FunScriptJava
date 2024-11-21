@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Lexer
 {
-    public ArrayList<LexToken> lex(String[] rawTokens)
+    public ArrayList<LexToken> lex(Object[] rawTokens)
     {
         ArrayList<LexToken> tokens = new ArrayList<LexToken>();
         LexState state = new LexState(0, rawTokens.length, rawTokens);
-        for(String rawToken : rawTokens)
+        for(String rawToken : state.rawTokens)
         {
             tokens.add(lex(rawToken));
         }
@@ -42,7 +42,14 @@ public class Lexer
             default:
                 if(Character.isDigit(rawToken.charAt(0)))
                 {
-
+                    if(validateNumber(rawToken))
+                        tt = TokenType.NUMBER;
+                    else
+                        tt = TokenType.INVALID;
+                }
+                else if(Character.isAlphabetic(rawToken.charAt(0)))
+                {
+                    tt = TokenType.WORD;
                 }
                 break;
         }
@@ -57,15 +64,24 @@ public class Lexer
         boolean isValidNumber = true;
         for(int i = 0; i < rawToken.length(); i++)
         {
-            //If the last character is a dot, then this is not a valid number.
-            // (because a dot must always be preceded and followed by at least one digit).
-            if(rawToken.charAt(i) == '.' && i == rawToken.length() - 1)
-                isValidNumber = false;
-            // If the first character is a dot, then this is not a valid number
-            // (because the dot must always be preceded and followed by at least one digit).
-            if(rawToken.charAt(i) == '.' && i == 0)
-                isValidNumber = false;
-            //If the rawToken doesn't contain any alphabetic characters, it must be a number.
+
+            if(rawToken.charAt(i) == '.')
+            {
+                //If the last character is a dot, then this is not a valid number.
+                // (because a dot must always be preceded and followed by at least one digit).
+                if(i == rawToken.length() - 1)
+                    isValidNumber = false;
+                // If the first character is a dot, then this is not a valid number
+                // (because the dot must always be preceded and followed by at least one digit).
+                else if(i == 0)
+                    isValidNumber = false;
+                else
+                    continue;
+            }
+            // If the character is otherwise a digit, we are still a valid number. Only '.' and
+            // digits are valid parts of a number.
+            if(!Character.isDigit(rawToken.charAt(i)))
+                return false;
 
         }
         return isValidNumber;
