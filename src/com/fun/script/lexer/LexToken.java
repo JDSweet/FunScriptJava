@@ -10,4 +10,10 @@ public class LexToken
         this.rawToken = rawToken;
         this.tokenType = tt;
     }
+
+    @Override
+    public String toString()
+    {
+        return rawToken;
+    }
 }

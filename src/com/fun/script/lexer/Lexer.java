@@ -23,6 +23,7 @@ public class Lexer
             case "fun": tt = TokenType.KEY_WORD_FUN; break;
             case "var": tt = TokenType.KEY_WORD_VAR; break;
             case "table": tt = TokenType.KEY_WORD_TABLE; break;
+            case "null": tt = TokenType.KEY_WORD_NULL; break;
             case "is": tt = TokenType.KEY_WORD_IS; break;
             case "{": tt = TokenType.OPEN_CURLY; break;
             case "}": tt = TokenType.CLOSE_CURLY; break;
@@ -39,6 +40,10 @@ public class Lexer
             case ".": tt = TokenType.DOT; break;
             case ":": tt = TokenType.COLON; break;
             case ";": tt = TokenType.SEMI_COLON; break;
+            case "or": tt = TokenType.KEY_WORD_OR; break;
+            case "not": tt = TokenType.KEY_WORD_NOT; break;
+            case ">": tt = TokenType.GREATER_THAN; break;
+            case "<": tt = TokenType.LESSER_THAN; break;
             default:
                 if(Character.isDigit(rawToken.charAt(0)))
                 {

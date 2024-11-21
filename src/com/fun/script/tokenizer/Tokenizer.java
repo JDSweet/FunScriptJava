@@ -5,11 +5,16 @@ import java.util.ArrayList;
 public class Tokenizer
 {
     private StringBuilder bldr;
-    private char[] tokenizableChars = "{}[]()+-*/%=.".toCharArray();
+    private char[] specialChars;
 
     public Tokenizer()
     {
         this.bldr = new StringBuilder();
+    }
+
+    public void setSpecialChars(String tChars)
+    {
+        this.specialChars = tChars.toCharArray();
     }
 
     public Object[] tokenize(String input)
@@ -73,7 +78,7 @@ public class Tokenizer
             else
             {
                 //If this is in a special list of tokenizable characters, they are singularly a token of their own.
-                if(containsChar(this.tokenizableChars, state.cur()))
+                if(containsChar(this.specialChars, state.cur()))
                 {
                     bldr.append(state.cur());
                     state.incr(1);
