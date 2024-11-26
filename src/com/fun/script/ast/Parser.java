@@ -1,8 +1,9 @@
 package com.fun.script.ast;
 
+import com.fun.script.FunScript;
+import com.fun.script.ast.nodes.CreateVariableNode;
 import com.fun.script.ast.nodes.RootNode;
 import com.fun.script.ast.nodes.SyntaxNode;
-import com.fun.script.ast.nodes.VarKeywordNode;
 import com.fun.script.lexer.LexToken;
 import com.fun.script.lexer.Lexer;
 import com.fun.script.lexer.TokenType;
@@ -26,26 +27,27 @@ public class Parser
 
         //Next, we're going to create our internal state.
         ParseState state = new ParseState(tokens.toArray(new LexToken[1]));
-
         RootNode root = new RootNode(null, null, state);
-
         while(state.hasMoreTokens())
         {
-            LexToken lexToken = state.cur();
-            root.addChild(lexToken(root, lexToken, state));
-            state.incr(1);
+//            LexToken lexToken = state.cur();
+//            FunScript.debugLog("Parser", "LexToken " + lexToken.rawToken + " being added to root.");
+//            root.addChild(parseToken(root, lexToken, state));
+//            state.incr(1);
+            root.addChild(parseToken(root, state.cur(), state));
         }
 
         return root;
     }
 
-    public SyntaxNode lexToken(RootNode root, LexToken token, ParseState state)
+    //This parses the next token in the stack.
+    public SyntaxNode parseToken(RootNode root, LexToken token, ParseState state)
     {
         SyntaxNode retval = null;
 
         switch(token.tokenType)
         {
-            case TokenType.KEY_WORD_VAR: retval = new VarKeywordNode(root, token, state); break;
+            case TokenType.KEY_WORD_VAR: retval = new CreateVariableNode(root, token, state); break;
         }
 
         return retval;

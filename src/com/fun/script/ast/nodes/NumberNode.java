@@ -12,6 +12,7 @@ public class NumberNode extends SyntaxNode
     {
         super(parent, tok, state);
         this.number = Float.parseFloat(this.tok.rawToken);
+        //state.incr(100);
     }
 
     @Override

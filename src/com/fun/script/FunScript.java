@@ -13,4 +13,9 @@ public class FunScript
     {
         return new FunScriptVal(number);
     }
+
+    public static void debugLog(String tag, String message)
+    {
+        System.out.println("[" + tag + "]" + " " + message);
+    }
 }

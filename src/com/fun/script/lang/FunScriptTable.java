@@ -1,6 +1,9 @@
 package com.fun.script.lang;
 
+import com.fun.script.FunScript;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class FunScriptTable
 {
@@ -19,5 +22,13 @@ public class FunScriptTable
     public FunScriptVal get(FunScriptVal key)
     {
         return this.values.get(key);
+    }
+
+    public void debug()
+    {
+        for(Map.Entry<FunScriptVal, FunScriptVal> kvp : this.values.entrySet())
+        {
+            FunScript.debugLog("FunScriptTable.debug()", kvp.getKey().stringVal + ", " + kvp.getValue().numberVal);
+        }
     }
 }

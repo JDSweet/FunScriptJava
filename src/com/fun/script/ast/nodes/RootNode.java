@@ -14,11 +14,6 @@ public class RootNode extends SyntaxNode
     @Override
     public void execute(FunScriptContext ctxt)
     {
-        for(SyntaxNode child : children)
-        {
-            System.out.println("Executing..." + child);
-            if(child != null)
-                child.execute(ctxt);
-        }
+        super.execute(ctxt);
     }
 }

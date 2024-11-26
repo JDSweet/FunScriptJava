@@ -31,7 +31,12 @@ public class Tokenizer
         //Tokenize the text.
         while (state.pos < state.len)
         {
-            tokens.add(nextToken(state));
+            String token = nextToken(state);
+            if(token.isEmpty())
+                continue;
+            else
+                tokens.add(token);
+            //tokens.add(nextToken(state));
         }
         return tokens.toArray();
     }
@@ -70,7 +75,8 @@ public class Tokenizer
                     }
                     else
                     {
-                        bldr.append(state.cur());
+                        if(!Character.isWhitespace(state.cur()))
+                            bldr.append(state.cur());
                         state.incr(1);
                     }
                 }

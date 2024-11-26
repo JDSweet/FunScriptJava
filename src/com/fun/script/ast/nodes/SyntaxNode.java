@@ -1,5 +1,6 @@
 package com.fun.script.ast.nodes;
 
+import com.fun.script.FunScript;
 import com.fun.script.ast.ParseState;
 import com.fun.script.lang.FunScriptContext;
 import com.fun.script.lexer.LexToken;
@@ -20,10 +21,13 @@ public class SyntaxNode
 
     public void execute(FunScriptContext ctxt)
     {
+//        FunScript.debugLog(getClass().getSimpleName() + " Debug", "Evaluating children...");
         for(SyntaxNode child : children)
         {
+//            FunScript.debugLog(getClass().getSimpleName() + " Debug", "Evaluating child " + child.getClass().getSimpleName());
             child.execute(ctxt);
         }
+//        FunScript.debugLog(getClass().getSimpleName() + " Debug", "Children evaluated.");
     }
 
     public void addChild(SyntaxNode child)
