@@ -1,0 +1,15 @@
+
+
+
+var myVar = 25
+var yourVar = "You"
+
+var addVar = 25 + myVar
+
+
+var multVar = addVar * 2
+
+var divVar = multVar / 2
+
+var modVar = divVar % 1
+var subtVar = addVar - 12

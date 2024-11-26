@@ -27,25 +27,25 @@ public class Parser
         //Next, we're going to create our internal state.
         ParseState state = new ParseState(tokens.toArray(new LexToken[1]));
 
-        RootNode root = new RootNode(null,state);
+        RootNode root = new RootNode(null, null, state);
 
         while(state.hasMoreTokens())
         {
             LexToken lexToken = state.cur();
-            root.addChild(lexToken(lexToken, state));
+            root.addChild(lexToken(root, lexToken, state));
             state.incr(1);
         }
 
         return root;
     }
 
-    public SyntaxNode lexToken(LexToken token, ParseState state)
+    public SyntaxNode lexToken(RootNode root, LexToken token, ParseState state)
     {
         SyntaxNode retval = null;
 
         switch(token.tokenType)
         {
-            case TokenType.KEY_WORD_VAR: retval = new VarKeywordNode(token, state); break;
+            case TokenType.KEY_WORD_VAR: retval = new VarKeywordNode(root, token, state); break;
         }
 
         return retval;

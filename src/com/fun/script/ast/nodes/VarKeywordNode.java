@@ -1,31 +1,32 @@
 package com.fun.script.ast.nodes;
 
 import com.fun.script.ast.ParseState;
+import com.fun.script.lang.FunScriptContext;
 import com.fun.script.lexer.LexToken;
 import com.fun.script.lexer.TokenType;
 
 public class VarKeywordNode extends SyntaxNode
 {
-    // A variable declaration is going to look for a word and a '=' next.
-    // In FunScript, you MUST assign a variable a value at
-    // the time of its declaration (even if that value is null).
+    // A variable declaration is going to look for a word (its alias) and a '=' next.
+    // In FunScript, you MUST assign variables to hold a value at
+    // the time of variable declaration (even if that value is null).
 
-    public VarKeywordNode(LexToken tok, ParseState state)
+    public VarKeywordNode(SyntaxNode parent, LexToken tok, ParseState state)
     {
-        super(tok, state);
+        super(parent, tok, state);
         state.incr(1);
         System.out.println(state.cur().tokenType.name());
         if(state.hasMoreTokens())
         {
             if(state.cur().tokenType == TokenType.WORD)
             {
-                addChild(new WordNode(state.cur(), state));
+                addChild(new VariableNameNode(this, state.cur(), state));
                 state.incr(1);
                 if(state.hasMoreTokens())
                 {
                     if(state.cur().tokenType == TokenType.EQUALS)
                     {
-                        addChild(new AssignmentOpNode(state.cur(), state));
+                        addChild(new AssignmentOpNode(this, state.cur(), state));
                         state.incr(1);
                     }
                 }
@@ -34,9 +35,9 @@ public class VarKeywordNode extends SyntaxNode
     }
 
     @Override
-    public void execute()
+    public void execute(FunScriptContext ctxt)
     {
         System.out.println("Declaring variable...");
-        super.execute();
+        super.execute(ctxt);
     }
 }

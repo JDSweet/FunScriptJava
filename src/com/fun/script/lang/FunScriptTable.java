@@ -10,4 +10,14 @@ public class FunScriptTable
     {
         this.values = new HashMap<>();
     }
+
+    public void put(FunScriptVal key, FunScriptVal val)
+    {
+        this.values.put(key, val);
+    }
+
+    public FunScriptVal get(FunScriptVal key)
+    {
+        return this.values.get(key);
+    }
 }
