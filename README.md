@@ -21,4 +21,7 @@ FunScript is a tokenizer, parser, lexer, and interpreter written in Java for a c
 ## v 0.3 Planned Features:
   - Parentheses and function call support added for math operations.
   - Support for variable names/identifiers in math operations.
-  - Support for 
+
+## v. 0.4
+  - Support for while-loop.
+  - Support for for-loop.
