@@ -1,5 +1,7 @@
 package com.fun.script.lang;
 
+import java.util.Objects;
+
 public class FunScriptVal
 {
     public float numberVal;
@@ -54,6 +56,6 @@ public class FunScriptVal
     @Override
     public int hashCode()
     {
-        return (int)this.numberVal;
+        return Objects.hash(stringVal, objVal, numberVal);
     }
 }

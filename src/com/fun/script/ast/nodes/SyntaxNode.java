@@ -34,4 +34,9 @@ public class SyntaxNode
     {
         this.children.add(child);
     }
+
+    public SyntaxNode getChild(int index)
+    {
+        return this.children.get(index);
+    }
 }

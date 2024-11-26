@@ -1,5 +1,6 @@
 import com.fun.script.ast.Parser;
 import com.fun.script.lang.FunScriptContext;
+import com.fun.script.lang.FunScriptTable;
 import com.fun.script.lang.FunScriptVal;
 import com.fun.script.lexer.LexToken;
 import com.fun.script.lexer.Lexer;
@@ -7,22 +8,37 @@ import com.fun.script.tokenizer.Tokenizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main
 {
     public static void main(String[] args)
     {
+//        HashMap<FunScriptVal, FunScriptVal> fstbl = new HashMap<>();
+//        fstbl.put(new FunScriptVal("myVar1"), new FunScriptVal(18));
+//        fstbl.put(new FunScriptVal("myVar2"), new FunScriptVal(19));
+//        fstbl.put(new FunScriptVal("myVar3"), new FunScriptVal(20));
+//        fstbl.put(new FunScriptVal("myVar4"), new FunScriptVal(21));
+//        for(Map.Entry<FunScriptVal, FunScriptVal> kvp : fstbl.entrySet())
+//        {
+//            System.out.println(kvp.getKey().stringVal + ", " + kvp.getValue().numberVal);
+//        }
+
+
+
+
+
         boolean debuggingTokenizer = false;
         boolean debuggingLexer = false;
         boolean debuggingParser = true;
 
         //String input = "fun var is  <=>= :> ; table hello world d .1.23. .d12{.}[.///]()+- */%";
         String input =
-                "var myVar = 25 " +
-                "var myVar2 = 28 " +
-                "var myVar3 = 29 " +
-                "var myVar4 = 30 " +
-                "var myVar5 = 31";
+                "var myVar = 25; " +
+                "var myVar2 = 28; " +
+                "var myVar3 = 29; " +
+                "var myVar4 = 30; " +
+                "var myVar5 = 31;";
 
 
         if(debuggingTokenizer)
@@ -58,10 +74,11 @@ public class Main
             parser.parse(input).execute(ctxt);
             ctxt.debugGlobalTable();
 
-            /*FunScriptVal v1 = new FunScriptVal("Hello");
-            FunScriptVal v2 = new FunScriptVal("Hello");
-            System.out.println(v1.equals(v2));*/
+            //FunScriptVal v1 = new FunScriptVal("Hello");
+            //FunScriptVal v2 = new FunScriptVal("Hello2");
+            //System.out.println(v1.equals(v2));
             //System.out.println(new FunScriptVal(tokens[1]).equals(new FunScriptVal("myVar")));
+
             FunScriptVal var1 = ctxt.getVariableByName("myVar");
             FunScriptVal var2 = ctxt.getVariableByName("myVar2");
             FunScriptVal var3 = ctxt.getVariableByName("myVar3");

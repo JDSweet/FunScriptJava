@@ -31,4 +31,9 @@ public class FunScriptTable
             FunScript.debugLog("FunScriptTable.debug()", kvp.getKey().stringVal + ", " + kvp.getValue().numberVal);
         }
     }
+
+    public boolean containsKey(FunScriptVal val)
+    {
+        return this.values.containsKey(val);
+    }
 }

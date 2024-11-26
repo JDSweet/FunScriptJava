@@ -1,9 +1,7 @@
 package com.fun.script.ast;
 
 import com.fun.script.FunScript;
-import com.fun.script.ast.nodes.CreateVariableNode;
-import com.fun.script.ast.nodes.RootNode;
-import com.fun.script.ast.nodes.SyntaxNode;
+import com.fun.script.ast.nodes.*;
 import com.fun.script.lexer.LexToken;
 import com.fun.script.lexer.Lexer;
 import com.fun.script.lexer.TokenType;
@@ -28,28 +26,62 @@ public class Parser
         //Next, we're going to create our internal state.
         ParseState state = new ParseState(tokens.toArray(new LexToken[1]));
         RootNode root = new RootNode(null, null, state);
+
+
         while(state.hasMoreTokens())
         {
-//            LexToken lexToken = state.cur();
-//            FunScript.debugLog("Parser", "LexToken " + lexToken.rawToken + " being added to root.");
-//            root.addChild(parseToken(root, lexToken, state));
-//            state.incr(1);
-            root.addChild(parseToken(root, state.cur(), state));
+            switch(state.cur().tokenType)
+            {
+                case TokenType.KEY_WORD_VAR: root.addChild(parseVariableDeclStatement(root, state)); break;
+                default: //We'll skip over undefined tokens for now.
+                    state.incr(1);
+            }
+            //root.addChild(parseToken(root, state));
         }
 
         return root;
     }
 
-    //This parses the next token in the stack.
-    public SyntaxNode parseToken(RootNode root, LexToken token, ParseState state)
+    public SyntaxNode parseVariableDeclStatement(SyntaxNode root, ParseState state)
     {
-        SyntaxNode retval = null;
-
-        switch(token.tokenType)
+        CreateVariableNode retval = new CreateVariableNode(root, null, state);
+        boolean reachedSemi = false;
+        while (state.hasMoreTokens() && state.cur().tokenType != TokenType.SEMI_COLON)
         {
-            case TokenType.KEY_WORD_VAR: retval = new CreateVariableNode(root, token, state); break;
+            if(state.cur().tokenType == TokenType.KEY_WORD_VAR)
+                state.incr(1);
+            if(state.cur().tokenType == TokenType.WORD) {
+                retval.addChild(new VariableNameNode(retval, state.cur(), state));
+                retval.variableName = retval.getChild(0);
+                state.incr(1);
+            }
+            if(state.cur().tokenType == TokenType.EQUALS)
+                state.incr(1);
+            if(state.cur().tokenType == TokenType.NUMBER)
+            {
+                retval.addChild(new NumberNode(retval, state.cur(), state));
+                retval.variableValue = retval.getChild(1);
+                state.incr(1);
+            }
+            //state.incr(1);
         }
-
+        if(state.hasMoreTokens() && state.cur().tokenType == TokenType.SEMI_COLON) {
+            reachedSemi = true;
+            state.incr(1);
+        }
+        if(!reachedSemi)
+            FunScript.debugLog("Parser.parseVariableDeclStatement()", "FunScriptError: Semi-colon expected!");
         return retval;
     }
+
+    //This parses the next token in the stack.
+//    public SyntaxNode parseToken(RootNode root, ParseState state)
+//    {
+//        CreateVariableNode retval = new CreateVariableNode(root, null, state);
+//        switch(state.cur().tokenType)
+//        {
+//            case
+//        }
+//        return retval;
+//    }
 }
