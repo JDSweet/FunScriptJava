@@ -38,7 +38,8 @@ public class Main
                 "var myVar2 = 28; " +
                 "var myVar3 = 29; " +
                 "var myVar4 = 30; " +
-                "var myVar5 = 31;";
+                "var myVar5 = 31; " +
+                "var myVar6 = 2 + 2";
 
 
         if(debuggingTokenizer)

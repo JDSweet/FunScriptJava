@@ -9,6 +9,8 @@ import com.fun.script.tokenizer.Tokenizer;
 
 import java.util.ArrayList;
 
+
+//TODO: Add basic left/right operations (i.e. basic addition, subtraction, multiplication, etc).
 public class Parser
 {
     //Returns the root execution node for this script.
@@ -25,7 +27,7 @@ public class Parser
 
         //Next, we're going to create our internal state.
         ParseState state = new ParseState(tokens.toArray(new LexToken[1]));
-        RootNode root = new RootNode(null, null, state);
+        RootNode root = new RootNode(null, null, state, this);
 
 
         while(state.hasMoreTokens())
@@ -44,14 +46,14 @@ public class Parser
 
     public SyntaxNode parseVariableDeclStatement(SyntaxNode root, ParseState state)
     {
-        CreateVariableNode retval = new CreateVariableNode(root, null, state);
+        CreateVariableNode retval = new CreateVariableNode(root, null, state, this);
         boolean reachedSemi = false;
         while (state.hasMoreTokens() && state.cur().tokenType != TokenType.SEMI_COLON)
         {
             if(state.cur().tokenType == TokenType.KEY_WORD_VAR)
                 state.incr(1);
             if(state.cur().tokenType == TokenType.WORD) {
-                retval.addChild(new VariableNameNode(retval, state.cur(), state));
+                retval.addChild(new VariableNameNode(retval, state.cur(), state, this));
                 retval.variableName = retval.getChild(0);
                 state.incr(1);
             }
@@ -59,7 +61,7 @@ public class Parser
                 state.incr(1);
             if(state.cur().tokenType == TokenType.NUMBER)
             {
-                retval.addChild(new NumberNode(retval, state.cur(), state));
+                retval.addChild(new NumberNode(retval, state.cur(), state, this));
                 retval.variableValue = retval.getChild(1);
                 state.incr(1);
             }
@@ -72,6 +74,16 @@ public class Parser
         if(!reachedSemi)
             FunScript.debugLog("Parser.parseVariableDeclStatement()", "FunScriptError: Semi-colon expected!");
         return retval;
+    }
+
+    public SyntaxNode readOperationLeft(SyntaxNode parent, ParseState state)
+    {
+        return null;
+    }
+
+    public SyntaxNode readOperationRight(SyntaxNode parent, ParseState state)
+    {
+        return null;
     }
 
     //This parses the next token in the stack.

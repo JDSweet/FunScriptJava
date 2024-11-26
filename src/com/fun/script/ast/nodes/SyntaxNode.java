@@ -2,6 +2,7 @@ package com.fun.script.ast.nodes;
 
 import com.fun.script.FunScript;
 import com.fun.script.ast.ParseState;
+import com.fun.script.ast.Parser;
 import com.fun.script.lang.FunScriptContext;
 import com.fun.script.lexer.LexToken;
 
@@ -13,7 +14,7 @@ public class SyntaxNode
     protected ArrayList<SyntaxNode> children = new ArrayList<SyntaxNode>();
     protected LexToken tok;
 
-    public SyntaxNode(SyntaxNode parent, LexToken tok, ParseState state)
+    public SyntaxNode(SyntaxNode parent, LexToken tok, ParseState state, Parser parser)
     {
         this.tok = tok;
         this.parent = parent;

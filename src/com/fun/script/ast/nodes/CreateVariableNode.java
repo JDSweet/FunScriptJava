@@ -2,6 +2,7 @@ package com.fun.script.ast.nodes;
 
 import com.fun.script.FunScript;
 import com.fun.script.ast.ParseState;
+import com.fun.script.ast.Parser;
 import com.fun.script.lang.FunScriptContext;
 import com.fun.script.lang.FunScriptVal;
 import com.fun.script.lexer.LexToken;
@@ -13,9 +14,9 @@ public class CreateVariableNode extends SyntaxNode
     public SyntaxNode variableValue;
 
     // [0] the variable, [1] the equal sign, [2] the value it is being assigned to.
-    public CreateVariableNode(SyntaxNode parent, LexToken tok, ParseState state)
+    public CreateVariableNode(SyntaxNode parent, LexToken tok, ParseState state, Parser parser)
     {
-        super(parent, tok, state);
+        super(parent, tok, state, parser);
 //        if(state.cur().tokenType == TokenType.KEY_WORD_VAR)
 //            state.incr(1);
 //        if(state.cur().tokenType == TokenType.WORD)
